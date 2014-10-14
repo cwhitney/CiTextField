@@ -1,28 +1,75 @@
-# Compiled Object files
-*.slo
-*.lo
+#see apps/.gitignore
+apps/*
+
+#also, see examples/.gitignore
+
+# Some general ignore patterns
+
+[Bb]uild/
+[Oo]bj/
 *.o
-*.obj
+[Dd]ebug*/
+[Rr]elease*/
+*.mode*
+*.app/
+*.pyc
+.svn/
+*.log
 
-# Precompiled Headers
-*.gch
-*.pch
+# IDE-specific ignore patterns
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+#XCode
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+#XCode 4
+xcuserdata
+*.xcworkspace
 
-# Fortran module files
-*.mod
+#Code::Blocks
+*.depend
+*.layout
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+#Visual Studio
+*.sdf
+*.opensdf
+*.suo
+*.pdb
+*.ilk
+*.aps
+ipch/
 
-# Executables
-*.exe
-*.out
-*.app
+#Eclipse
+.metadata
+local.properties
+.externalToolBuilders
+
+# OS-specific ignore patterns
+
+#Linux
+*~
+# KDE
+.directory
+.AppleDouble
+
+#OSX
+.DS_Store
+*.swp
+*~.nib
+# Thumbnails
+._*
+
+#Windows
+# Windows image file caches
+Thumbs.db
+# Folder config file
+Desktop.ini
+
+#Android
+.csettings
+/libs/openFrameworksCompiled/project/android/paths.make
+
+# Miscellaneous
+.mailmap
