@@ -33,6 +33,8 @@ class CiTextField {
     
     int getCursorIndex( ci::Vec2f pos );
     
+    int eraseString( int start, int end );
+    
     bool            bDragging;
     bool            bActive;
     bool            bHighlighted;

@@ -58,43 +58,56 @@ void CiTextField::setText(std::string text){
     mText = text;
 }
 
+int CiTextField::eraseString( int start, int end ){
+    int s = min(mCaratStart, mCaratIndex);
+    int e = max(mCaratStart, mCaratIndex);
+    
+    mText.erase(s, e-s);
+    return s;
+}
 
 void CiTextField::onKeyDown(KeyEvent event){
     if( !bActive ){
         return;
     }
     
+    if( event.getCode() == KeyEvent::KEY_RETURN || event.getCode() == KeyEvent::KEY_ESCAPE ){
+        bActive = false;
+        bHighlighted = false;
+        return;
+    }
+    
     if( event.getCode() == KeyEvent::KEY_LEFT ){
         bDragging = false;
         mCaratIndex = max(mCaratIndex - 1, 0);
+        
+        bHighlighted = false;
     }else if( event.getCode() == KeyEvent::KEY_RIGHT ){
         bDragging = false;
         mCaratIndex = min(mCaratIndex + 1, (int)mText.size());
+        
+        bHighlighted = false;
     }
     
     else if( event.getCode() == KeyEvent::KEY_DELETE ){
         if( bHighlighted ){
-            int s = min(mCaratStart, mCaratIndex);
-            int e = max(mCaratStart, mCaratIndex);
-            
-            mText.erase(s, e-s);
-            mCaratIndex = s;
+            mCaratIndex = eraseString( mCaratStart, mCaratIndex);
         }else{
             mText.erase(mCaratIndex, 1);
         }
+        
+        bHighlighted = false;
     }
     
     else if( event.getCode() == KeyEvent::KEY_BACKSPACE ){
         if( bHighlighted ){
-            int s = min(mCaratStart, mCaratIndex);
-            int e = max(mCaratStart, mCaratIndex);
-            
-            mText.erase(s, e-s);
-            mCaratIndex = s;
+            mCaratIndex = eraseString( mCaratStart, mCaratIndex);
         }else{
             mText.erase(mCaratIndex-1, 1);
             mCaratIndex--;
         }
+        
+        bHighlighted = false;
     }
     
     else if (event.getCode() > 31 && event.getCode() < 272){  // delete is in here, but we handle it above
@@ -112,9 +125,9 @@ void CiTextField::onKeyDown(KeyEvent event){
             mText.insert(mCaratIndex, 1, event.getChar() );
             ++mCaratIndex;
         }
+        
+        bHighlighted = false;
     }
-    
-    bHighlighted = false;
 }
 
 void CiTextField::onKeyUp(KeyEvent event){
