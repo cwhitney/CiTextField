@@ -100,14 +100,16 @@ void CiTextField::onKeyDown(KeyEvent event){
     }
     
     else if( event.getCode() == KeyEvent::KEY_BACKSPACE ){
-        if( bHighlighted ){
-            mCaratIndex = eraseString( mCaratStart, mCaratIndex);
-        }else{
-            mText.erase(mCaratIndex-1, 1);
-            mCaratIndex--;
+        if( mText.size() ){
+            if( bHighlighted ){
+                mCaratIndex = eraseString( mCaratStart, mCaratIndex);
+            }else{
+                mText.erase(mCaratIndex-1, 1);
+                mCaratIndex--;
+            }
+            
+            bHighlighted = false;
         }
-        
-        bHighlighted = false;
     }
     
     else if (event.getCode() > 31 && event.getCode() < 272){  // delete is in here, but we handle it above
