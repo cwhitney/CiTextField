@@ -45,7 +45,9 @@ CiTextField::CiTextField( std::string text, ci::Rectf bounds, ci::Font font ){
     bActive = false;
     bHighlighted = false;
     
-    bUseScissorTest = true;
+    bUseScissorTest = false;
+    
+    padding.set(10, -1);
     
     mCaratIndex = mText.size();
 }
@@ -171,11 +173,13 @@ void CiTextField::onMouseUp( ci::app::MouseEvent event ){
 }
 
 int CiTextField::getCursorIndex( ci::Vec2f localPos ){
+    Vec2f pos = localPos - padding;
+    
     int i=0;
     for( ; i<mText.size()+1; i++){
         Vec2f sm = tFont->measureString( mText.substr(0,i) );
         
-        if( sm.x > localPos.x ){
+        if( sm.x > pos.x ){
             if(i>1){
                 return i-1;
             }else{
@@ -212,9 +216,11 @@ void CiTextField::draw(){
     gl::color( mColorStroke );
     gl::drawStrokedRect( mBounds );
     
+    gl::pushMatrices();
+    gl::translate( padding );
+    
     // draw our cursor line
     if( bActive ){
-    
         mCursorPos.x = tFont->measureString( mText.substr(0, mCaratIndex) ).x + mBounds.x1;
         
         gl::color( mColorHighlight );
@@ -236,6 +242,8 @@ void CiTextField::draw(){
     
     gl::color( mColorText );
     tFont->drawString(mText, Vec2f(mBounds.x1,mBounds.y1 + emSize.y) );
+    
+    gl::popMatrices();
     
     if( bUseScissorTest ){
         glDisable(GL_SCISSOR_TEST);

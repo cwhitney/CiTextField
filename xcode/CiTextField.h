@@ -23,6 +23,9 @@ class CiTextField {
     
     bool bUseScissorTest;
     
+    ci::Vec2f       padding;
+    ci::Color       mColorStroke, mColorFill, mColorText, mColorHighlight;
+    
   private:
     void onMouseDown( ci::app::MouseEvent event );
     void onMouseDrag( ci::app::MouseEvent event );
@@ -41,8 +44,6 @@ class CiTextField {
     
     ci::Vec2f       mCursorPos;
     int             mCaratIndex, mCaratStart;
-    
-    ci::Color       mColorStroke, mColorFill, mColorText, mColorHighlight;
     
     std::string     mText;
     ci::Rectf       mBounds;
